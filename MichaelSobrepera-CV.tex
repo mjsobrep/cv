@@ -1,0 +1,179 @@
+\documentclass[10pt, letter]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{microtype}
+
+\usepackage{xcolor}
+\definecolor{urlblue}{HTML}{01256e}
+\usepackage[inline]{enumitem}
+
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+
+\usepackage{booktabs}
+\usepackage{array}
+
+% DOCUMENT LAYOUT
+\usepackage{geometry} 
+\geometry{margin=1in,letterpaper}
+\setlength\parindent{0in}
+
+%% Here I set up the headings:
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\pagestyle{fancy}
+\rhead{}
+\chead{\ifthenelse{\value{page}=1}{}{Michael Sobrepera}}
+\lhead{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{1pt}
+\rfoot{Compiled on \today\ at \currenttime  ~EDT}
+\cfoot{}
+\lfoot{Page \thepage}
+
+% ---- CUSTOM COMMANDS
+\newcommand{\html}[1]{\href{#1}{\scriptsize\textsc{[html]}}}
+\newcommand{\pdf}[1]{\href{#1}{\scriptsize\textsc{[pdf]}}}
+\newcommand{\doi}[1]{\href{#1}{\scriptsize\textsc{[doi]}}}
+% % ---- MARGIN YEARS
+% \usepackage{marginnote}
+% \newcommand{\years}[1]{\marginnote{\scriptsize #1}}
+% \renewcommand*{\raggedleftmarginnote}{}
+% \setlength{\marginparsep}{7pt}
+% \reversemarginpar
+
+% HEADINGS
+\usepackage{sectsty} 
+\usepackage[normalem]{ulem} 
+\sectionfont{\mdseries\upshape\Large}
+\subsectionfont{\mdseries\scshape\normalsize} 
+\subsubsectionfont{\mdseries\upshape\large} 
+
+% PDF SETUP
+% ---- FILL IN HERE THE DOC TITLE AND AUTHOR
+\usepackage[bookmarks, colorlinks, breaklinks, 
+% ---- FILL IN HERE THE TITLE AND AUTHOR
+    pdftitle={MichaelSobrepera-CV},
+    pdfauthor={Michael Sobrepera},
+    pdfsubject={curriculum vitae},
+    pdfproducer={https://github.com/mjsobrep/cv/blob/master/MichaelSobrepera-CV.tex}
+]{hyperref}  
+\hypersetup{linkcolor=blue,citecolor=blue,filecolor=black,urlcolor=urlblue} 
+
+
+% Define a new environment for sections in the CV.
+% This environment takes 1 arg, the name of the section
+\newenvironment{cvsection}[1]{
+    % begining of environment:
+    {\Large #1}
+    \vspace{.1cm}
+    
+}{
+    % end of environment:
+}
+
+% Define a new environment for items in the cv
+% this takes args: 
+% 	1 - Title
+%	2 - Company/group/univ
+%	3 - Location
+%	4 - start date
+%	5 - end date
+%	6 - description (optional)
+%
+% Ex: \cvitem{title}{company}{location}{start date}{end date}{description}
+\newcommand{\cvitem}[6]{
+    \strut\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+        \textbf{#1} & #4 -- #5\\
+        #2 & #3\\
+    \end{tabular*}\\[.05cm]
+    #6
+    \end{minipage}
+    \vspace{.3cm}
+}
+
+% DOCUMENT
+
+%%%%%%%%%%%% HEADER %%%%%%%%%%%%
+\begin{document}
+\begin{center}
+{\LARGE Michael Sobrepera}\\[.5cm]
+University of Pennsylvania\\
+\begin{minipage}[c]{.35\textwidth}
+220 South 33rd Street\\
+229 Towne Building\\
+Philadelphia, PA 19104 U.S.A.\\[.2cm]
+\end{minipage}
+\begin{minipage}[c]{.35\textwidth}
+\begin{tabular}{r l}
+phone: & 770-324-6196\\
+email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
+       & \href{mailto:mjsobrep@seas.upenn.edu}{mjsobrep@seas.upenn.edu}\\
+\textsc{url}: & \href{michaelsobrepera.com}{michaelsobrepera.com}\\ 
+\end{tabular}
+\end{minipage}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hrule
+\vspace{.4cm}
+
+\begin{cvsection}{Education}
+    \cvitem{Doctor of Philosophy in Mechanical Engineering}{University of Pennsylvania}{Philadelphia, PA}{Aug 2016}{present}{Currently pursuing a PhD under the guidance of Dr. Michelle Johnson in the Rehabilitation Robotics Laboratory. Affiliated with General Robotics, Automation, Sensing, \& Perception Laboratory (GRASP lab). GPA: 3.28}
+
+    \cvitem{Bachelor of Science in Biomedical Engineering}{Georgia Institute of Technology}{Atlanta, GA}{Aug 2012}{Dec 2015}{Completed degree with a minor in Computer Science – Focus on Intelligence. GPA: 3.35}
+
+    \cvitem{Bachelor of Science in Chemical Engineering}{Auburn University Honors College}{Auburn, AL}{Aug 2011}{May 2012}{Pursued degree. GPA: 3.90}
+\end{cvsection}
+
+\begin{cvsection}{Research Experience}
+    \cvitem{Socially Assistive Robot for Upper Extremity Rehabilitation}{University of Pennsylvania, Rehabilitation Robotics Laboratory}{Philadelphia, PA }{Aug 2016}{present}{Primary work towards PhD thesis. Working under Dr. Michelle Johnson to develop an affordable socially assistive robot to aid in remote, semi-autonomous, and fully autonomous assessment and treatment of pediatric patients with upper extremity impairments as a tool to expand the reach of clinicians while improving the objectivity of diagnostic tools.}
+
+    \cvitem{Edge Based Tracking for Flexible Automotive Manufacturing}{Georgia Institute of Technology, IRIM Technology Transition Laboratory}{Atlanta, GA}{Aug 2015}{June 2016}{Worked as an Undergraduate Researcher (Aug 2015 – Dec 2015) and Research Technician II (Dec 2015 – June 2016) under Henrik Christensen and Larry Sweet to advance technologies in the visual servoing space, explicitly focused on potential industry applications. Utilized heavy industrial robots while developing perception, calibration, and control systems in C++ and Python. Principle researcher on Edge Based Tracking project for PSA Peugeot Citroën, the development of a video based real time edge based tracker for manufacturing applications}
+\end{cvsection}
+
+\begin{cvsection}{Teaching}
+    \cvitem{MEAM 147: Intro to Mechanics Lab}{University of Pennsylvania}{Philadelphia, PA}{Aug 2018}{Dec 2018}{Organized and ran the mechanics lab for first semester undergraduate students in Mechanical Engineering and related fields. As the head TA, coordinated setup, updated activities, lectured at the begining of labs, helped students through labs, managed graders, and held office hours. The class consisted of 41 students across 3 sections.}
+    
+    \cvitem{MEAM 211: Undergraduate Dynamics}{University of Pennsylvania}{Philadelphia, PA}{Jan 2018}{May 2018}{As a graduate TA, ran 2 recitation sections a week, held office hours, covered 2 main lectures, developed a problem set, graded exams, and managed homework graders}
+
+    \cvitem{MEAM 147: Intro to Mechanics Lab}{University of Pennsylvania}{Philadelphia, PA}{Aug 2017}{Dec 2017}{As the junior graduate TA, lectured at the begining of labs, helped students through labs, and held office hours.}
+\end{cvsection}
+
+\begin{cvsection}{Service}
+    \cvitem{GRASP RET Program}{company}{location}{start date}{end date}{description}
+\end{cvsection}
+
+\begin{cvsection}{Publications}
+    
+\end{cvsection}
+
+\begin{cvsection}{Work Experience}
+    \cvitem{Automation Intern}{Eli Lilly and Company}{Indianapolis, IN}{May 2015}{Aug 2015}{Evaluated options for offline software/hardware/operator in the loop plant simulations for the purposes of process validation, control code development, pre-FAT control system checkout, operator training, and process improvement, with a specific focus on Emerson DeltaV and Rockwell interoperability. Reported on findings in both a technical paper and presentation.}
+
+    \cvitem{Machine Shop Supervisor}{Georgia Institute of Technology, TEP Machine Shop}{Atlanta, GA}{Aug 2014}{May 2015}{Maintained equipment, trained shop users, guided Masters in Biomedical Innovation and Development (MBID) students in design and prototyping of medical devices, supported the Cardiovascular Fluid Mechanics (CFM) Lab and the Tissue Mechanics Lab. }
+    
+    \cvitem{Product Development Engineering CO-OP}{Unilife Corporation}{York/King of Prussia, PA}{Jan 2014}{Jul 2014}{
+    Developed procedure for rapidly testing design iterations using a hand powered injection molding machine. 
+    Analyzed and modified product components and assemblies to improve final product outcomes, including problem assessment, design changes, prototype production, prototype testing, and submittal for final design review. 
+    Designed, installed, and programmed automation tooling for the testing, manufacturing, and finishing of injectable drug delivery devices, including applications in micro injection molding, gluing, and small scale vacuum stoppering. 
+    Independently developed and sourced custom product packaging materials from a foreign supplier.
+    Independently developed and sourced custom thermoformed components from a domestic supplier. 
+    Sourced majority of custom components for pilot production (30 ppm) line, including BOM generation, drawing organization, RFQs, quote selection, and vendor relations. 
+    Designed and sourced safety/airflow enclosures for pilot production line.}
+
+    \cvitem{Shop Hand}{Cobb County School District, Kennesaw Mountain High School}{Kennesaw, GA}{Jun 2012}{Aug 2012}{Cleaned floors, tables, desks, bathrooms, etc., removed trash, stripped floors, waxed floors}
+
+    \cvitem{Histotechnician, Intern }{Emory-Adventist Hospital Anatomic Pathology Lab}{Smyrna, GA }{Aug 2010}{Dec 2010}{Processed specimens (grossing, embedding, cutting, and staining), researched H. pylori (bacteria) }
+
+    \cvitem{Independent Contractor, Entertainment Specialist}{Fun-Fare}{Metro Atlanta, Ga}{April 2010}{Jun 2012}{I worked setting up/dismantling inflatable rides, selling tickets, collecting tickets and supervising/assisting children on rides. 
+
+    I was able to provide an enjoyable experience to children on the rides. I was also able to portray a positive image of the company, while acting as the point of sale for all tickets at events.
+    }
+
+    \cvitem{Medical Assistant, Administrative Assistant}{Metairie Diabetes Metabolic Clinic}{Metairie/LaPlace, LA}{May 2010}{Jul 2010}{Triaged (taking vitals, drawing blood, checking patients’ medications), coded for insurance billing, collected payment, answered phones.}
+
+    % \cvitem{title}{company}{location}{start date}{end date}{description}
+
+    % \cvitem{title}{company}{location}{start date}{end date}{description}
+\end{cvsection}
+\end{document}
