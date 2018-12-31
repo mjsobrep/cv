@@ -12,10 +12,54 @@
 \usepackage{booktabs}
 \usepackage{array}
 
+% Spacing between paragraphs
+\usepackage{parskip}
+\newlength{\currentparskip}
+
+%%%%% Indentation of content
+\newlength{\cvindent}
+\setlength{\cvindent}{1cm}
+
+% bibliography setup
+\usepackage[maxbibnames=99,sorting=none]{biblatex}
+\addbibresource{ref.bib}
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+      \printfield{labelprefix}%
+      \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \addtolength{\leftmargin}{\cvindent}%<----- here
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
 % DOCUMENT LAYOUT
 \usepackage{geometry} 
 \geometry{margin=1in,letterpaper}
 \setlength\parindent{0in}
+
+% Underlining:
+\usepackage[normalem]{ulem} 
+
+% Setup section headers:
+% using sectsy
+% \usepackage{sectsty} 
+% \sectionfont{\mdseries\upshape\Large}
+% \subsectionfont{\mdseries\scshape\normalsize} 
+% \subsubsectionfont{\mdseries\upshape\large} 
+\usepackage[explicit]{titlesec}
+\titleformat{name=\section,numberless}{\normalfont\upshape\Large\bfseries}{}{0em}{#1}[]
+\titleformat{name=\subsection,numberless}{\normalfont\upshape\large\bfseries}{}{0.5cm}{#1}[]
+% \titleformat{\section}
+% {\normalfont\Large\bfseries}{\thesection}{1em}{}[after]
+% \titleformat{\subsection}
+% {\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
 %% Here I set up the headings:
 \usepackage{fancyhdr}
@@ -41,13 +85,6 @@
 % \setlength{\marginparsep}{7pt}
 % \reversemarginpar
 
-% HEADINGS
-\usepackage{sectsty} 
-\usepackage[normalem]{ulem} 
-\sectionfont{\mdseries\upshape\Large}
-\subsectionfont{\mdseries\scshape\normalsize} 
-\subsubsectionfont{\mdseries\upshape\large} 
-
 % PDF SETUP
 % ---- FILL IN HERE THE DOC TITLE AND AUTHOR
 \usepackage[bookmarks, colorlinks, breaklinks, 
@@ -64,9 +101,16 @@
 % This environment takes 1 arg, the name of the section
 \newenvironment{cvsection}[1]{
     % begining of environment:
-    {\Large #1}
-    \vspace{.1cm}
-    
+    \section*{#1}   
+}{
+    % end of environment:
+}
+
+% Define a new environment for sub sections in the CV.
+% This environment takes 1 arg, the name of the section
+\newenvironment{cvsubsection}[1]{
+    % begining of environment:
+    \subsection*{#1}
 }{
     % end of environment:
 }
@@ -82,20 +126,53 @@
 %
 % Ex: \cvitem{title}{company}{location}{start date}{end date}{description}
 \newcommand{\cvitem}[6]{
-    \strut\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+    \setlength{\currentparskip}{\parskip}% save the value
+    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
+    \setlength{\parskip}{\currentparskip}% restore the value
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
         \textbf{#1} & #4 -- #5\\
-        #2 & #3\\
+        #2 & #3
     \end{tabular*}\\[.05cm]
     #6
     \end{minipage}
     \vspace{.3cm}
 }
 
+\newcommand{\cvitemshort}[3]{
+    \setlength{\currentparskip}{\parskip}% save the value
+    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
+    \setlength{\parskip}{\currentparskip}% restore the value
+    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+        \textbf{#1} & #2
+    \setbox0=\hbox{#3\unskip}\ifdim\wd0=0pt
+        % third arg is empty
+        \end{tabular*}
+    \else
+        % third arg is not empty
+        \end{tabular*}\\[.05cm]
+        #3
+    \fi
+    \end{minipage}
+    \vspace{.3cm}
+}
+
+% \cvmentee{name}{start date}{end date}{description}
+\newcommand{\cvmentee}[4]{
+    \setlength{\currentparskip}{\parskip}% save the value
+    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
+    \setlength{\parskip}{\currentparskip}% restore the value
+    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+        \textbf{#1} & #2 -- #3
+    \end{tabular*}\\[.05cm]
+    #4
+    \end{minipage}
+    \vspace{.3cm}
+}
+
 % DOCUMENT
+\begin{document}
 
 %%%%%%%%%%%% HEADER %%%%%%%%%%%%
-\begin{document}
 \begin{center}
 {\LARGE Michael Sobrepera}\\[.5cm]
 University of Pennsylvania\\
@@ -109,7 +186,7 @@ Philadelphia, PA 19104 U.S.A.\\[.2cm]
 phone: & 770-324-6196\\
 email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
        & \href{mailto:mjsobrep@seas.upenn.edu}{mjsobrep@seas.upenn.edu}\\
-\textsc{url}: & \href{michaelsobrepera.com}{michaelsobrepera.com}\\ 
+\textsc{url}: & \href{http://michaelsobrepera.com}{michaelsobrepera.com}\\ 
 \end{tabular}
 \end{minipage}
 \end{center}
@@ -118,33 +195,93 @@ email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
 \vspace{.4cm}
 
 \begin{cvsection}{Education}
-    \cvitem{Doctor of Philosophy in Mechanical Engineering}{University of Pennsylvania}{Philadelphia, PA}{Aug 2016}{present}{Currently pursuing a PhD under the guidance of Dr. Michelle Johnson in the Rehabilitation Robotics Laboratory. Affiliated with General Robotics, Automation, Sensing, \& Perception Laboratory (GRASP lab). GPA: 3.28}
+    \cvitem{Doctor of Philosophy in Mechanical Engineering}{University of Pennsylvania}{Philadelphia, PA}{Aug 2016}{present}{Currently pursuing a PhD under the guidance of Dr. Michelle Johnson in the Rehabilitation Robotics Laboratory. Affiliated with the General Robotics, Automation, Sensing, \& Perception Laboratory (GRASP lab). GPA: 3.28}
 
-    \cvitem{Bachelor of Science in Biomedical Engineering}{Georgia Institute of Technology}{Atlanta, GA}{Aug 2012}{Dec 2015}{Completed degree with a minor in Computer Science – Focus on Intelligence. GPA: 3.35}
+    \cvitem{Bachelor of Science in Biomedical Engineering}{Georgia Institute of Technology}{Atlanta, GA}{Aug 2012}{Dec 2015}{Completed degree with a minor in Computer Science - Focus on Intelligence. GPA: 3.35}
 
     \cvitem{Bachelor of Science in Chemical Engineering}{Auburn University Honors College}{Auburn, AL}{Aug 2011}{May 2012}{Pursued degree. GPA: 3.90}
 \end{cvsection}
 
 \begin{cvsection}{Research Experience}
-    \cvitem{Socially Assistive Robot for Upper Extremity Rehabilitation}{University of Pennsylvania, Rehabilitation Robotics Laboratory}{Philadelphia, PA }{Aug 2016}{present}{Primary work towards PhD thesis. Working under Dr. Michelle Johnson to develop an affordable socially assistive robot to aid in remote, semi-autonomous, and fully autonomous assessment and treatment of pediatric patients with upper extremity impairments as a tool to expand the reach of clinicians while improving the objectivity of diagnostic tools.}
+    \cvitem{Socially Assistive Robot for Upper Extremity Rehabilitation}{University of Pennsylvania, Rehabilitation Robotics Laboratory}{Philadelphia, PA }{Aug 2016}{present}{Primary work towards PhD thesis. Working under Dr. Michelle Johnson to develop an affordable socially assistive robot to aid in remote, semi-autonomous, and fully autonomous assessment and treatment of patients with upper extremity impairments as a tool to expand the reach of clinicians while improving the objectivity of diagnostic tools. The project involves two primary focusses 1) understanding how to make robots that are affordable while still being effective at conveying emotional information and giving directions 2) developing a framework for identifying motor function from video of a patient doing various robot guided activities.}
 
-    \cvitem{Edge Based Tracking for Flexible Automotive Manufacturing}{Georgia Institute of Technology, IRIM Technology Transition Laboratory}{Atlanta, GA}{Aug 2015}{June 2016}{Worked as an Undergraduate Researcher (Aug 2015 – Dec 2015) and Research Technician II (Dec 2015 – June 2016) under Henrik Christensen and Larry Sweet to advance technologies in the visual servoing space, explicitly focused on potential industry applications. Utilized heavy industrial robots while developing perception, calibration, and control systems in C++ and Python. Principle researcher on Edge Based Tracking project for PSA Peugeot Citroën, the development of a video based real time edge based tracker for manufacturing applications}
+    \cvitem{Edge Based Tracking for Flexible Manufacturing}{Georgia Institute of Technology, IRIM Technology Transition Laboratory}{Atlanta, GA}{Aug 2015}{June 2016}{Worked as an Undergraduate Researcher (Aug 2015 - Dec 2015) and Research Technician II (Dec 2015 - June 2016) under Henrik Christensen and Larry Sweet to advance technologies in the visual servoing space, explicitly focused on potential industry applications. Lead researcher on Edge Based Tracking project for PSA Peugeot Citroën, the development of a video based real time edge based tracker for manufacturing applications. Utilized heavy industrial robots while developing perception, calibration, and control systems in C++ and Python. }
 \end{cvsection}
 
 \begin{cvsection}{Teaching}
-    \cvitem{MEAM 147: Intro to Mechanics Lab}{University of Pennsylvania}{Philadelphia, PA}{Aug 2018}{Dec 2018}{Organized and ran the mechanics lab for first semester undergraduate students in Mechanical Engineering and related fields. As the head TA, coordinated setup, updated activities, lectured at the begining of labs, helped students through labs, managed graders, and held office hours. The class consisted of 41 students across 3 sections.}
-    
-    \cvitem{MEAM 211: Undergraduate Dynamics}{University of Pennsylvania}{Philadelphia, PA}{Jan 2018}{May 2018}{As a graduate TA, ran 2 recitation sections a week, held office hours, covered 2 main lectures, developed a problem set, graded exams, and managed homework graders}
+    \begin{cvsubsection}{Teaching Assistantships}
+        \cvitem{MEAM 147: Intro to Mechanics Lab}{University of Pennsylvania}{Philadelphia, PA}{Aug 2018}{Dec 2018}{Organized and ran the mechanics lab for first semester undergraduate students in Mechanical Engineering and related fields. As the head TA, coordinated setup, updated activities, lectured at the begining of labs, helped students through labs, managed graders, and held office hours. The class consisted of 41 students across 3 sections.}
+        
+        \cvitem{MEAM 211: Undergraduate Dynamics}{University of Pennsylvania}{Philadelphia, PA}{Jan 2018}{May 2018}{As a graduate TA, designed and ran 2 recitation sections a week, in which students solved course related problems in a collaborative setting with just in time instruction, held office hours, covered 2 general lectures, developed a problem set, graded exams, and managed homework graders}
 
-    \cvitem{MEAM 147: Intro to Mechanics Lab}{University of Pennsylvania}{Philadelphia, PA}{Aug 2017}{Dec 2017}{As the junior graduate TA, lectured at the begining of labs, helped students through labs, and held office hours.}
+        \cvitem{MEAM 147: Intro to Mechanics Lab}{University of Pennsylvania}{Philadelphia, PA}{Aug 2017}{Dec 2017}{As the junior graduate TA, lectured at the begining of labs, helped students through labs, and held office hours.}
+    \end{cvsubsection}
+
+    \begin{cvsubsection}{Guest Lectures}
+        \cvitemshort{Robots in Pediatric Rehabilitation}{Nov 2018}{Lecture on Robotics in Pediatric Rehabilitation given to the Bioengineering 514: Rehab Engineering and Design class at the University of Pennsylvania, including demos of systems, and a final group activity.}
+
+        \cvitemshort{Robots in Pediatric Rehabilitation}{Apr 2018}{Lecture on Robotics in Pediatric Rehabilitation given to the Teaching Instute of Philadelphia Robots in HealthCare: From Science Fiction to Reality class.}
+
+        \cvitemshort{Robot Inspiration: Artificial Intelligence/Brain and Programming}{Mar 2018}{Lecture on the basics of artifical intelligence and machine learning given to the Teaching Instute of Philadelphia Robots in HealthCare: From Science Fiction to Reality class.}
+    \end{cvsubsection}
+
+    \begin{cvsubsection}{Mentees}
+        \cvmentee{Enri Kina}{May 2017}{present}{Has worked heavily on designing the head for a social robot and understanding how to test the designs since the summer after his freshman year. The summer after his sophmore year and fall of his junior year, he continued his work as part of the Penn Rachleff Scholars Program.}
+
+        \cvmentee{Danielle Chen}{Jun 2018}{Sep 2018}{Worked on the form and design of a social assistive robot, during the summer after her first year in the Integrated Product Design Masters program}
+        
+        \cvmentee{Shyon Small}{May 2018}{Jul 2018}{Explored how to use social robots to perform cognitive testing on pediatric patients who may have disorders such as Cerebral Palsy. He completed his work as part of the National Science Foundation and Philadelphia Region Louis Stokes Alliance for Minority Participation (NSF/LSAMP) Undergraduate Research Program.}
+
+        \cvmentee{Jagtar Singh}{May 2018}{Aug 2018}{Worked towards a framework to extract biometric data such as pulse rate from a video of a person while active, the summer after his first year in the Mechanical Engineering and Applied Mechanics masters.}
+
+        \cvmentee{Weiyu Du}{May 2018}{Jul 2018}{Developed an understanding of challenges and opportunities presented by hospital environments for low cost autonomous navigation. Worked the summer after her freshman year as part of the Penn Undergraduate Research Mentoring Program (PURM).}
+
+        \cvmentee{Andrew Levine}{Jun 2018}{Aug 2018}{Worked to program a Nao robot to perform neuro motor therapy exercises with patients during the summer after his sophomore year.}
+
+        \cvmentee{Tim Kulesza}{Jun 2017}{Aug 2017}{Developed a set of needs for a mobile robotic base to carry a hospital based semi autonomous social robot. He then translated the needs to a series of design requirements and developed specifications for such a system. He worked the summer after completing his undergrad.}
+
+        \cvmentee{Leora Korn}{May 2018}{July 2018}{Worked on designing the upper extremities of a social assistive robot for upper extremity rehab so that they could adequately perform tasks necessary to engage patients in rehab activites. Worked the summer after her freshman year.}
+
+    \end{cvsubsection}
 \end{cvsection}
 
 \begin{cvsection}{Service}
-    \cvitem{GRASP RET Program}{company}{location}{start date}{end date}{description}
+    \cvitemshort{Upward Bound \textit{Growing out of the Sterotypes} Workshop Lead}{Dec 2018}{Developed and ran a workshop introducing high school students to programming robots using Sphero robots and custom designed wooden mazes. The workshop was part of an event put on by the Singh Center for Nanotechnology for the LULAC National Educational Service Centers (LNESC) Upward Bound Program.}
+
+    \cvitemshort{EL Education Future of Work Conference Interviewee}{Nov 2018}{}
+
+    \cvitemshort{Philadelphia Robotics Expo Presenter}{Oct 2018}{}
+
+    \cvitem{Mechanical Engineering Graduate Association Vice President}{University of Pennsylvania}{Philadelphia, PA}{Sep 2017}{Sep 2018}{Represented masters and PhD students to the department and organized events to foster academic cooperation and departmental unity. Started a new PhD mentoring program to ease the process of starting a PhD by giving new students access to more experienced PhD students outside of their labs. Also started a new one hour lab showcase event to allow incoming students to become familiar with the research done across the department through a series of 12 fast paced talks.}
+
+    \cvitem{GRASP RET Program}{University of Pennsylvania}{Philadelphia, PA}{Jun 2018}{Aug 2018}{Mentored two School District of Philadelphia middle school teachers, one math one science, through a six week research experience. Guided teachers through the process of establishing the state of the art in an area, identifying a knowledge gap, developing a hypothesis to narrow the gap, developing a methodology to test their hypothesis, testing their hypothesis, and presenting their work in written and oral form. 
+    
+    The program includes a total of six visits to middle school classrooms throughout the 2018-2019 school year to demonstrate work being done today in research  and help teach lessons.
+    
+    Delivered an intro to circuits and an intro to computer aided design class to the other program participants.
+    
+    Work funded by NSF Grant \#: 1542301}
+
+    \cvitemshort{Be a Pennovator Workshop Lead}{Apr 2018}{Developed and ran a workshop introducing middle school students to programming robots using Sphero robots and custom designed wooden mazes.}
+
+    \cvitem{GRASP RET Program}{University of Pennsylvania}{Philadelphia, PA}{Jun 2017}{Aug 2017}{Mentored a School District of Philadelphia middle school science teacher through a six week research experience. Guided her through the process of establishing the state of the art in an area, identifying a knowledge gap, developing a hypothesis to narrow the gap, developing a methodology to test her hypothesis, testing her hypothesis, and presenting her work in written and oral form. 
+    
+    Visited her classroom three times throughout the 2017-2018 school year to demonstrate work being done today in research, help teach a circuits lesson, and to lead a coding lesson using Spheros.
+
+    Developed and delivered an intro to circuits and an intro to computer aided design class to the other program participants.
+    
+    Work funded by NSF Grant \#: 1542301}
+
+    \cvitemshort{Penn Science Olympiad Volunteer}{Feb 2017}{}
+
+    \cvitemshort{Penn First Lego League Judge}{Feb 2017}{}
+
+    \cvitemshort{Penn-Alexander School Science Fair Judge}{Dec 2016}{}
 \end{cvsection}
 
 \begin{cvsection}{Publications}
-    
+    \nocite{resnageneral,resnaface}
+    \printbibliography[title={Conference Abstracts with Poster Presentations},heading=subbibliography] 
 \end{cvsection}
 
 \begin{cvsection}{Work Experience}
@@ -171,7 +308,7 @@ email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
     }
 
     \cvitem{Medical Assistant, Administrative Assistant}{Metairie Diabetes Metabolic Clinic}{Metairie/LaPlace, LA}{May 2010}{Jul 2010}{Triaged (taking vitals, drawing blood, checking patients’ medications), coded for insurance billing, collected payment, answered phones.}
-
+ 
     % \cvitem{title}{company}{location}{start date}{end date}{description}
 
     % \cvitem{title}{company}{location}{start date}{end date}{description}
