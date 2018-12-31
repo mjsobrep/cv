@@ -1,198 +1,14 @@
 \documentclass[10pt, letter]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{microtype}
 
-\usepackage{xcolor}
-\definecolor{urlblue}{HTML}{01256e}
-\usepackage[inline]{enumitem}
-
-\usepackage{lipsum}% http://ctan.org/pkg/lipsum
-
-\usepackage{booktabs}
-\usepackage{array}
-
-% Spacing between paragraphs
-\usepackage{parskip}
-\newlength{\currentparskip}
-
-%%%%% Indentation of content
-\newlength{\cvindent}
-\setlength{\cvindent}{1cm}
-
-% bibliography setup
-\usepackage[maxbibnames=99,sorting=none]{biblatex}
-\addbibresource{ref.bib}
-\defbibenvironment{bibliography}
-  {\list
-     {\printtext[labelnumberwidth]{%
-      \printfield{labelprefix}%
-      \printfield{labelnumber}}}
-     {\setlength{\labelwidth}{\labelnumberwidth}%
-      \setlength{\leftmargin}{\labelwidth}%
-      \setlength{\labelsep}{\biblabelsep}%
-      \addtolength{\leftmargin}{\labelsep}%
-      \addtolength{\leftmargin}{\cvindent}%<----- here
-      \setlength{\itemsep}{\bibitemsep}%
-      \setlength{\parsep}{\bibparsep}}%
-      \renewcommand*{\makelabel}[1]{\hss##1}}
-  {\endlist}
-  {\item}
-
-% DOCUMENT LAYOUT
-\usepackage{geometry} 
-\geometry{margin=1in,letterpaper}
-\setlength\parindent{0in}
-
-% Underlining:
-\usepackage[normalem]{ulem} 
-
-% Setup section headers:
-% using sectsy
-% \usepackage{sectsty} 
-% \sectionfont{\mdseries\upshape\Large}
-% \subsectionfont{\mdseries\scshape\normalsize} 
-% \subsubsectionfont{\mdseries\upshape\large} 
-\usepackage[explicit]{titlesec}
-\titleformat{name=\section,numberless}{\normalfont\upshape\Large\bfseries}{}{0em}{#1}[]
-\titleformat{name=\subsection,numberless}{\normalfont\upshape\large\bfseries}{}{0.5cm}{#1}[]
-% \titleformat{\section}
-% {\normalfont\Large\bfseries}{\thesection}{1em}{}[after]
-% \titleformat{\subsection}
-% {\normalfont\large\bfseries}{\thesubsection}{1em}{}
-
-%% Here I set up the headings:
-\usepackage{fancyhdr}
-\usepackage{datetime}
-\pagestyle{fancy}
-\rhead{}
-\chead{\ifthenelse{\value{page}=1}{}{Michael Sobrepera}}
-\lhead{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{1pt}
-\rfoot{Compiled on \today\ at \currenttime  ~EDT}
-\cfoot{}
-\lfoot{Page \thepage}
-
-% ---- CUSTOM COMMANDS
-\newcommand{\html}[1]{\href{#1}{\scriptsize\textsc{[html]}}}
-\newcommand{\pdf}[1]{\href{#1}{\scriptsize\textsc{[pdf]}}}
-\newcommand{\doi}[1]{\href{#1}{\scriptsize\textsc{[doi]}}}
-% % ---- MARGIN YEARS
-% \usepackage{marginnote}
-% \newcommand{\years}[1]{\marginnote{\scriptsize #1}}
-% \renewcommand*{\raggedleftmarginnote}{}
-% \setlength{\marginparsep}{7pt}
-% \reversemarginpar
-
-% PDF SETUP
-% ---- FILL IN HERE THE DOC TITLE AND AUTHOR
-\usepackage[bookmarks, colorlinks, breaklinks, 
-% ---- FILL IN HERE THE TITLE AND AUTHOR
-    pdftitle={MichaelSobrepera-CV},
-    pdfauthor={Michael Sobrepera},
-    pdfsubject={curriculum vitae},
-    pdfproducer={https://github.com/mjsobrep/cv/blob/master/MichaelSobrepera-CV.tex}
-]{hyperref}  
-\hypersetup{linkcolor=blue,citecolor=blue,filecolor=black,urlcolor=urlblue} 
-
-
-% Define a new environment for sections in the CV.
-% This environment takes 1 arg, the name of the section
-\newenvironment{cvsection}[1]{
-    % begining of environment:
-    \section*{#1}   
-}{
-    % end of environment:
-}
-
-% Define a new environment for sub sections in the CV.
-% This environment takes 1 arg, the name of the section
-\newenvironment{cvsubsection}[1]{
-    % begining of environment:
-    \subsection*{#1}
-}{
-    % end of environment:
-}
-
-% Define a new environment for items in the cv
-% this takes args: 
-% 	1 - Title
-%	2 - Company/group/univ
-%	3 - Location
-%	4 - start date
-%	5 - end date
-%	6 - description (optional)
-%
-% Ex: \cvitem{title}{company}{location}{start date}{end date}{description}
-\newcommand{\cvitem}[6]{
-    \setlength{\currentparskip}{\parskip}% save the value
-    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
-    \setlength{\parskip}{\currentparskip}% restore the value
-    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
-        \textbf{#1} & #4 -- #5\\
-        #2 & #3
-    \end{tabular*}\\[.05cm]
-    #6
-    \end{minipage}
-    \vspace{.3cm}
-}
-
-\newcommand{\cvitemshort}[3]{
-    \setlength{\currentparskip}{\parskip}% save the value
-    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
-    \setlength{\parskip}{\currentparskip}% restore the value
-    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
-        \textbf{#1} & #2
-    \setbox0=\hbox{#3\unskip}\ifdim\wd0=0pt
-        % third arg is empty
-        \end{tabular*}
-    \else
-        % third arg is not empty
-        \end{tabular*}\\[.05cm]
-        #3
-    \fi
-    \end{minipage}
-    \vspace{.3cm}
-}
-
-% \cvmentee{name}{start date}{end date}{description}
-\newcommand{\cvmentee}[4]{
-    \setlength{\currentparskip}{\parskip}% save the value
-    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
-    \setlength{\parskip}{\currentparskip}% restore the value
-    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
-        \textbf{#1} & #2 -- #3
-    \end{tabular*}\\[.05cm]
-    #4
-    \end{minipage}
-    \vspace{.3cm}
-}
+\input{preamble.tex}
 
 % DOCUMENT
 \begin{document}
 
-%%%%%%%%%%%% HEADER %%%%%%%%%%%%
-\begin{center}
-{\LARGE Michael Sobrepera}\\[.5cm]
-University of Pennsylvania\\
-\begin{minipage}[c]{.35\textwidth}
-220 South 33rd Street\\
-229 Towne Building\\
-Philadelphia, PA 19104 U.S.A.\\[.2cm]
-\end{minipage}
-\begin{minipage}[c]{.35\textwidth}
-\begin{tabular}{r l}
-phone: & 770-324-6196\\
-email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
-       & \href{mailto:mjsobrep@seas.upenn.edu}{mjsobrep@seas.upenn.edu}\\
-\textsc{url}: & \href{http://michaelsobrepera.com}{michaelsobrepera.com}\\ 
-\end{tabular}
-\end{minipage}
-\end{center}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hrule
-\vspace{.4cm}
+\input{header.tex}
+
+\section*{Summary}
+PhD student with a strong robotics, biomedical engineering, and computer science educational background complemented by research experience in robotics and perception as well as work experience involving product development and manufacturing. Effective at combining creative thinking with logical design ideas to develop solutions to challenging and novel problems. Excellent verbal and written skills with a detail-oriented approach for completing projects. Thoroughly enjoys learning and applying new skills and talents to problems while pushing technical boundaries. Is particularly interested in applications of robots to healthcare and interactions between people and robots. Committed to educating the next generation of engineers via engagement at all levels and explaining relevance, significance, and meaning of work to the public. 
 
 \begin{cvsection}{Education}
     \cvitem{Doctor of Philosophy in Mechanical Engineering}{University of Pennsylvania}{Philadelphia, PA}{Aug 2016}{present}{Currently pursuing a PhD under the guidance of Dr. Michelle Johnson in the Rehabilitation Robotics Laboratory. Affiliated with the General Robotics, Automation, Sensing, \& Perception Laboratory (GRASP lab). GPA: 3.28}
@@ -206,6 +22,11 @@ email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
     \cvitem{Socially Assistive Robot for Upper Extremity Rehabilitation}{University of Pennsylvania, Rehabilitation Robotics Laboratory}{Philadelphia, PA }{Aug 2016}{present}{Primary work towards PhD thesis. Working under Dr. Michelle Johnson to develop an affordable socially assistive robot to aid in remote, semi-autonomous, and fully autonomous assessment and treatment of patients with upper extremity impairments as a tool to expand the reach of clinicians while improving the objectivity of diagnostic tools. The project involves two primary focusses 1) understanding how to make robots that are affordable while still being effective at conveying emotional information and giving directions 2) developing a framework for identifying motor function from video of a patient doing various robot guided activities.}
 
     \cvitem{Edge Based Tracking for Flexible Manufacturing}{Georgia Institute of Technology, IRIM Technology Transition Laboratory}{Atlanta, GA}{Aug 2015}{June 2016}{Worked as an Undergraduate Researcher (Aug 2015 - Dec 2015) and Research Technician II (Dec 2015 - June 2016) under Henrik Christensen and Larry Sweet to advance technologies in the visual servoing space, explicitly focused on potential industry applications. Lead researcher on Edge Based Tracking project for PSA Peugeot Citroën, the development of a video based real time edge based tracker for manufacturing applications. Utilized heavy industrial robots while developing perception, calibration, and control systems in C++ and Python. }
+\end{cvsection}
+
+\begin{cvsection}{Publications}
+    \nocite{resnageneral,resnaface}
+    \printbibliography[title={Conference Abstracts with Poster Presentations},heading=subbibliography] 
 \end{cvsection}
 
 \begin{cvsection}{Teaching}
@@ -279,9 +100,8 @@ email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
     \cvitemshort{Penn-Alexander School Science Fair Judge}{Dec 2016}{}
 \end{cvsection}
 
-\begin{cvsection}{Publications}
-    \nocite{resnageneral,resnaface}
-    \printbibliography[title={Conference Abstracts with Poster Presentations},heading=subbibliography] 
+\begin{cvsection}{Awards}
+    \cvitemshort{Hispanic Scholarship Fund (HSF) Scholar}{Dec 2016}{}
 \end{cvsection}
 
 \begin{cvsection}{Work Experience}
@@ -313,4 +133,5 @@ email: & \href{mailto:mjsobrep@live.com}{mjsobrep@live.com}\\
 
     % \cvitem{title}{company}{location}{start date}{end date}{description}
 \end{cvsection}
+
 \end{document}
