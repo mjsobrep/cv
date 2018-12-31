@@ -65,7 +65,7 @@
 \usepackage{datetime}
 \pagestyle{fancy}
 \rhead{}
-\chead{\ifthenelse{\value{page}=1}{}{Michael Sobrepera}}
+\chead{\ifthenelse{\value{page}=1}{}{Michael Sobrepera - CV}}
 \lhead{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{1pt}
@@ -156,14 +156,15 @@
 }
 
 % \cvmentee{name}{start date}{end date}{description}
-\newcommand{\cvmentee}[4]{
+\newcommand{\cvmentee}[6]{
     \setlength{\currentparskip}{\parskip}% save the value
     \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
     \setlength{\parskip}{\currentparskip}% restore the value
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
-        \textbf{#1} & #2 -- #3
+        \textbf{#1} & #2 -- #3\\
+        #4 & #5
     \end{tabular*}\\[.05cm]
-    #4
+    #6
     \end{minipage}
     \vspace{.3cm}
 }
