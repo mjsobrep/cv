@@ -132,8 +132,12 @@
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
         \textbf{#1} & #4 -- #5\\
         #2 & #3
-    \end{tabular*}\\[.05cm]
-    #6
+    \end{tabular*}
+    \ifx&#6&%
+    \else
+        \\[.05cm]
+        #6
+    \fi
     \end{minipage}
     \vspace{.3cm}
 }
