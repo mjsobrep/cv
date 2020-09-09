@@ -3,11 +3,13 @@
 \usepackage[english]{babel}
 \usepackage{microtype}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
 
 \usepackage{xcolor}
 \definecolor{urlblue}{HTML}{01256e}
 \usepackage[inline]{enumitem}
+\setitemize{noitemsep,topsep=-.2cm,parsep=0pt,partopsep=0pt}
 
 \usepackage{lipsum}% http://ctan.org/pkg/lipsum
 
@@ -159,13 +161,14 @@
     \setbox0=\hbox{#3\unskip}\ifdim\wd0=0pt
         % third arg is empty
         \end{tabular*}
+    \end{minipage}
+    \vspace{-.2cm}
     \else
         % third arg is not empty
         \end{tabular*}\\[.05cm]
         #3
-    \fi
     \end{minipage}
-    \vspace{-.2cm}
+    \fi
 }
 
 % \cvmentee{name}{start date}{end date}{description}
