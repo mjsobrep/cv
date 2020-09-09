@@ -2,6 +2,8 @@
 \usepackage{csquotes}
 \usepackage[english]{babel}
 \usepackage{microtype}
+\usepackage[T1]{fontenc}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
 
 \usepackage{xcolor}
 \definecolor{urlblue}{HTML}{01256e}
@@ -42,13 +44,14 @@
 
 % DOCUMENT LAYOUT
 \usepackage{geometry}
-\geometry{margin=.75in,letterpaper}
+\geometry{nohead,left=0.6in,right=0.6in,bottom=0.4in,top=0.4in,footskip=5pt,letterpaper}
 \setlength\parindent{0in}
 
 % Underlining:
 \usepackage[normalem]{ulem}
 
 \usepackage{tagging}
+\usepackage{calc}
 
 % Setup section headers:
 % using sectsy
@@ -57,7 +60,8 @@
 % \subsectionfont{\mdseries\scshape\normalsize}
 % \subsubsectionfont{\mdseries\upshape\large}
 \usepackage[explicit]{titlesec}
-\titleformat{name=\section,numberless}{\normalfont\upshape\Large\bfseries}{}{0em}{#1}[]
+\titleformat{name=\section,numberless}{\normalfont\upshape\Large\bfseries}{}{0cm}{#1}[]
+\titlespacing{\section}{0cm}{0.1cm}{0.1cm}
 \titleformat{name=\subsection,numberless}{\normalfont\upshape\large\bfseries}{}{0.5cm}{#1}[]
 % \titleformat{\section}
 % {\normalfont\Large\bfseries}{\thesection}{1em}{}[after]
@@ -134,7 +138,7 @@
     \setlength{\parskip}{\currentparskip}% restore the value
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
         \textbf{#1} & #4 -- #5\\
-        #2 & #3
+        \emph{#2} & \tagged{location}{#3}
     \end{tabular*}
     \ifx&#6&%
     \else
@@ -142,7 +146,7 @@
         #6
     \fi
     \end{minipage}
-    \vspace{.3cm}
+    %\vspace{.3cm}
 }
 
 \newcommand{\cvitemshort}[3]{
@@ -160,7 +164,7 @@
         #3
     \fi
     \end{minipage}
-    \vspace{.3cm}
+    \vspace{-.2cm}
 }
 
 % \cvmentee{name}{start date}{end date}{description}
