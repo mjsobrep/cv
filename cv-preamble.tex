@@ -46,7 +46,7 @@
 
 % DOCUMENT LAYOUT
 \usepackage{geometry}
-\geometry{left=0.6in,right=0.6in,bottom=0.6in,top=0.6in,headsep=0.6cm, footskip=.6cm,letterpaper}
+\geometry{left=0.55in,right=0.55in,bottom=0.6in,top=0.6in,headsep=0.6cm, footskip=.6cm,letterpaper}
 \setlength\parindent{0in}
 
 % Underlining:
@@ -154,6 +154,7 @@
 
 \newcommand{\cvitemshort}[3]{
     \setlength{\currentparskip}{\parskip}% save the value
+    \vspace{-.1cm}
     \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
     \setlength{\parskip}{\currentparskip}% restore the value
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -162,25 +163,28 @@
         % third arg is empty
         \end{tabular*}
     \end{minipage}
-    \vspace{-.2cm}
+    \vspace{-.1cm}
+    %\vspace{-.2cm}
     \else
         % third arg is not empty
         \end{tabular*}\\[.05cm]
         #3
     \end{minipage}
+    \vspace{0.07cm}
     \fi
 }
 
-% \cvmentee{name}{start date}{end date}{description}
+% \cvmentee{name}{start date}{end date}{place in program}{description}
 \newcommand{\cvmentee}[6]{
     \setlength{\currentparskip}{\parskip}% save the value
     \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
     \setlength{\parskip}{\currentparskip}% restore the value
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
         \textbf{#1} & #2 -- #3\\
-        #4 & % #5
-    \end{tabular*}\\[.05cm]
-    #6
+        #4 % & #5
+    \end{tabular*}\untagged{short-mentees}{\\[.05cm]}
+    \untagged{short-mentees}{#6}
     \end{minipage}
-    \vspace{.3cm}
+    \untagged{short-mentees}{\vspace{.3cm}}
+    \tagged{short-mentees}{\vspace{-.3cm}}
 }
