@@ -1,0 +1,33 @@
+name: send-to-website
+
+on: push
+
+jobs:
+    compile-send:
+        name: Compile and send CV to mjsobrep.com
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  path: main
+            - uses: xu-cheng/latex-action@v2
+              with:
+                  root_file: main/MichaelSobrepera.tex
+            - uses: actions/checkout@v2
+              with:
+                  repository: https://github.com/mjsobrep/mjsobrep.github.io
+                  path: website
+                  ref: develop
+            - run: |
+                rm website/MichaelSobrepera.pdf
+                cp main/MichaelSobrepera.pdf website/MichaelSobrepera.pdf
+            - name: setup git config
+              run: |
+                git config user.name "GitHub Actions Bot"
+                git config user.email "<>"
+            - name: commit
+              run: |
+                cd website
+                git add MichaelSobrepera.pdf
+                git commit -m "new CV/Resume commit"
+                git push origin develop
