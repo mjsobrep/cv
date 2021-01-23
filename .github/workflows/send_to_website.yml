@@ -32,4 +32,4 @@ jobs:
                 cd website
                 git add otherFiles/MichaelSobrepera.pdf
                 git commit -m "new CV/Resume commit"
-                git push origin develop
+                git push origin deploy
