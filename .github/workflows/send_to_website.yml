@@ -30,6 +30,6 @@ jobs:
             - name: commit
               run: |
                 cd website
-                git add MichaelSobrepera.pdf
+                git add otherFiles/MichaelSobrepera.pdf
                 git commit -m "new CV/Resume commit"
                 git push origin develop
