@@ -16,7 +16,7 @@ jobs:
                   working_directory: main
             - uses: actions/checkout@v2
               with:
-                  repository: https://github.com/mjsobrep/mjsobrep.github.io
+                  repository: mjsobrep/mjsobrep.github.io
                   path: website
                   ref: develop
             - run: |
