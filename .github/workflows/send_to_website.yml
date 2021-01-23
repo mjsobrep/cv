@@ -24,6 +24,7 @@ jobs:
                 cp main/MichaelSobrepera.pdf website/otherFiles/MichaelSobrepera.pdf
             - name: setup git config
               run: |
+                cd website
                 git config user.name "GitHub Actions Bot"
                 git config user.email "<>"
             - name: commit
