@@ -12,7 +12,7 @@ jobs:
                   path: main
             - uses: xu-cheng/latex-action@v2
               with:
-                  root_file: main/MichaelSobrepera.tex
+                  root_file: MichaelSobrepera.tex
                   working_directory: main
             - uses: actions/checkout@v2
               with:
