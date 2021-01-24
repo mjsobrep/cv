@@ -1,1 +1,1 @@
-$ENV{'TZ'}='America/New_York';
+$ENV{'TZ'}='UTC';
