@@ -154,6 +154,21 @@
     %\vspace{.3cm}
 }
 
+\newcommand{\cvitemtwojob}[9]{
+    \setlength{\currentparskip}{\parskip}% save the value
+    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
+    \setlength{\parskip}{\currentparskip}% restore the value
+    \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+        \textbf{#1} & #4 -- #5\\
+        \textbf{#7} & #8 -- #9\\
+        \emph{#2} & \tagged{location}{#3}
+    \end{tabular*}
+        \\[.05cm]
+        #6
+    \end{minipage}
+    %\vspace{.3cm}
+}
+
 \newcommand{\cvitemshort}[3]{
     \setlength{\currentparskip}{\parskip}% save the value
     \vspace{-.1cm}
