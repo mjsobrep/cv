@@ -76,6 +76,8 @@
 
 \usepackage[showseconds=false,useregional=text]{datetime2}
 
+\usepackage{changepage}
+
 \pagestyle{fancy}
 \rhead{}
 \chead{\ifthenelse{\value{page}=1}{}{Michael Sobrepera - CV}}
@@ -145,12 +147,15 @@
         \textbf{#1} & #4 -- #5\\
         \emph{#2} & \tagged{location}{#3}
     \end{tabular*}
+    \end{minipage}
     \ifx&#6&%
     \else
-        \\[.05cm]
-        #6
+        \vspace{-0.2cm}
+        %\\[.05cm]
+    \begin{adjustwidth}{\cvindent}{0pt}
+      #6
+    \end{adjustwidth}
     \fi
-    \end{minipage}
     %\vspace{.3cm}
 }
 
@@ -163,9 +168,13 @@
         \textbf{#7} & #8 -- #9\\
         \emph{#2} & \tagged{location}{#3}
     \end{tabular*}
-        \\[.05cm]
-        #6
     \end{minipage}
+        %\\[.05cm]
+        \vspace{-0.2cm}
+
+    \begin{adjustwidth}{\cvindent}{0pt}
+      #6
+    \end{adjustwidth}
     %\vspace{.3cm}
 }
 
@@ -184,7 +193,8 @@
     %\vspace{-.2cm}
     \else
         % third arg is not empty
-        \end{tabular*}\\[.05cm]
+        \end{tabular*}
+        %\\[.05cm]
         #3
     \end{minipage}
     \vspace{0.07cm}
