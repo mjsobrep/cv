@@ -18,7 +18,7 @@ jobs:
               with:
                   repository: mjsobrep/mjsobrep.github.io
                   path: website
-                  token: ${{ secrets.PAT_MJS_WEBSITE }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
             - run: |
                 rm website/otherFiles/MichaelSobrepera.pdf
                 cp main/MichaelSobrepera.pdf website/otherFiles/MichaelSobrepera.pdf
