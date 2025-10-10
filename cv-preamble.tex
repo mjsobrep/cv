@@ -29,7 +29,7 @@
 \usepackage[maxbibnames=99,sorting=none]{biblatex}
 \addbibresource{ref.bib}
 \defbibenvironment{bibliography}
-  {\list
+  {\small\list
      {\printtext[labelnumberwidth]{%
       \printfield{labelprefix}%
       \printfield{labelnumber}}}
@@ -140,42 +140,27 @@
 %
 % Ex: \cvitem{title}{company}{location}{start date}{end date}{description}
 \newcommand{\cvitem}[6]{
-    \setlength{\currentparskip}{\parskip}% save the value
-    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
-    \setlength{\parskip}{\currentparskip}% restore the value
+    \begin{adjustwidth}{\cvindent}{0pt}
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
         \textbf{#1} & #4 -- #5\\
-        \emph{#2} & \tagged{location}{#3}
+        \emph{#2} & \tagged{location}{\emph{ #3 }}
     \end{tabular*}
-    \end{minipage}
     \ifx&#6&%
     \else
-        \vspace{-0.2cm}
-        %\\[.05cm]
-    \begin{adjustwidth}{\cvindent}{0pt}
-      #6
-    \end{adjustwidth}
+        #6
     \fi
-    %\vspace{.3cm}
+    \end{adjustwidth}
 }
 
 \newcommand{\cvitemtwojob}[9]{
-    \setlength{\currentparskip}{\parskip}% save the value
-    \strut\hfill\begin{minipage}{\dimexpr\textwidth-\cvindent}
-    \setlength{\parskip}{\currentparskip}% restore the value
+    \begin{adjustwidth}{\cvindent}{0pt}
     \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
         \textbf{#1} & #4 -- #5\\
         \textbf{#7} & #8 -- #9\\
-        \emph{#2} & \tagged{location}{#3}
+        \emph{#2} & \tagged{location}{\emph{ #3 }}
     \end{tabular*}
-    \end{minipage}
-        %\\[.05cm]
-        \vspace{-0.2cm}
-
-    \begin{adjustwidth}{\cvindent}{0pt}
       #6
     \end{adjustwidth}
-    %\vspace{.3cm}
 }
 
 \newcommand{\cvitemshort}[3]{
