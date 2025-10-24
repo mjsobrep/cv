@@ -14,11 +14,14 @@ jobs:
               with:
                   root_file: MichaelSobrepera.tex
                   working_directory: main
+            - uses: webfactory/ssh-agent@v0.5.4
+              with:
+                  ssh-private-key: ${{ secrets.WEBSITE_DEPLOY_KEY }}
             - uses: actions/checkout@v2
               with:
                   repository: mjsobrep/mjsobrep.github.io
                   path: website
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  ssh-key: ${{ secrets.WEBSITE_DEPLOY_KEY }}
             - run: |
                 rm website/otherFiles/MichaelSobrepera.pdf
                 cp main/MichaelSobrepera.pdf website/otherFiles/MichaelSobrepera.pdf
